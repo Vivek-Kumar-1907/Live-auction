@@ -64,7 +64,7 @@ const handlePlaceBid = (e: React.FormEvent) => {
         <>
           <input
             type="number"
-            placeholder={`Min bid: ₹${minbid + 1}`}
+            placeholder={`Minimum bid > ₹${minbid}`}
             value={bidAmount}
             onChange={(e) => setBidAmount(e.target.value)}
             className="w-full p-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 focus:outline-blue-500"
