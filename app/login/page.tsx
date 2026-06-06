@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -48,12 +48,14 @@ export default function Login() {
     { error && <p className="text-red-500 mb-4">{error}</p> }
     <form className="w-full flex flex-col gap-4" onSubmit={handleSubmit}>
       <input
+        required
         type="text"
         placeholder="Username"
         name="username"
         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700"
       />
       <input
+        required
         type="password"
         placeholder="Password"
         name="password"
