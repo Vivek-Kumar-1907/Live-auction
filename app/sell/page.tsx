@@ -1,12 +1,16 @@
 "use client";
+import BackToDashNav from "@/components/BackToDashNav";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Sell() {
   const router = useRouter();
-
+  const [isProcessing, setIsProcessing] = useState(false);
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsProcessing(true);      
     const formData = new FormData(e.currentTarget);
+    e.currentTarget.reset();
     const res = await fetch("/api/sell", {
       method: "POST",
       body: formData,
@@ -16,6 +20,7 @@ export default function Sell() {
       return;
     }
     else {
+      setIsProcessing(false);
       router.push("/view");
     }
   }
@@ -23,14 +28,7 @@ export default function Sell() {
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-black font-sans">
 
-      <nav className="flex items-center px-8 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-        <button
-          onClick={() => router.push("/dashboard")}
-          className="text-sm text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 transition"
-        >
-          ← Back to Dashboard
-        </button>
-      </nav>
+      <BackToDashNav/>
 
       <main className="flex justify-center px-4 py-12">
         <div className="w-full max-w-lg bg-white dark:bg-zinc-900 rounded-xl shadow-sm px-8 py-10">
@@ -82,11 +80,27 @@ export default function Sell() {
               />
             </div>
 
+            <div className="flex flex-col gap-1">
+              <label className="text-sm text-zinc-600 dark:text-zinc-400">Auction Length (hours)</label>
+              <input
+                type="number"
+                name="auctionLength"
+                placeholder="Default-1 hour"
+                min={1}
+                defaultValue={1}
+                className="w-full p-2 border border-gray-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800"
+              />
+            </div>
+
+            
+
             <button
               type="submit"
-              className="w-full mt-2 bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+              className={`w-full mt-2 bg-blue-500 text-white py-2 rounded-md transition duration-200 ${
+                isProcessing ? "opacity-50 cursor-not-allowed" : "hover:bg-blue-600"
+              }`}
             >
-              Create Auction
+              {isProcessing ? "Creating Auction..." : "Create Auction"}
             </button>
 
           </form>

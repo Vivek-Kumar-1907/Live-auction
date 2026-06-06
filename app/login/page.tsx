@@ -14,6 +14,7 @@ export default function Login() {
       const formData = new FormData(e.currentTarget);
       const username = formData.get("username") as string;
       const password = formData.get("password") as string;
+      e.currentTarget.reset();
       try{
         const response = await fetch("/api/login", {
           method: "POST",

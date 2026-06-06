@@ -16,6 +16,7 @@ export default function Register() {
     const username = formData.get("username") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    e.currentTarget.reset();
     try{
       const response = await fetch("/api/register", {
         method: "POST",
