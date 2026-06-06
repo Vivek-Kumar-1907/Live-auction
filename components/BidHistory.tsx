@@ -12,14 +12,16 @@ export default function BidHistory({ initialBids, itemId }: {
 
     const [bids, setBids] = useState(initialBids);
     useEffect(()=>{
-            socket.on("connect", ()=>{
-                socket.emit("join", itemId);
-            });
+            if(!socket.connected){
+                socket.connect();
+            }
+            socket.emit("join", itemId);
             socket.on("new-bid", (data)=>{
                 setBids((bids)=>[data, ...bids]);
             });
             return ()=> {
-                socket.disconnect();
+                socket.off("new-bid");
+                socket.emit("leave", itemId);
             }
     }, [itemId]);
   return (

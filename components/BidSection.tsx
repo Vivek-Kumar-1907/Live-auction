@@ -14,15 +14,15 @@ export default function BidSection({ expired, itemId, startingBid }: {
 
     useEffect(() => {
         if (!socket.connected) {
-        socket.connect();
+            socket.connect();
         }
+        socket.emit("join", itemId);
         socket.on("min-bid", (data)=>{
             setminbid((minbid)=> minbid > data ? minbid : data );
         });
         return (()=>{
-            if(socket.connected){
-                socket.disconnect;
-            }
+            socket.off("min-bid");
+            socket.emit("leave", itemId);
         })
     }, [itemId]);
 
@@ -38,7 +38,7 @@ const handlePlaceBid = (e: React.FormEvent) => {
     }
 
     if (amount <= minbid) {
-      setError(`Bid must be greater INR ${startingBid}.`);
+      setError(`Bid must be greater than INR ${minbid}.`);
       return;
     }
 

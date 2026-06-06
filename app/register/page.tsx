@@ -55,6 +55,7 @@ export default function Register() {
         type="text"
         placeholder="Username"
         name="username"
+        required
         minLength={3}
         maxLength={20}
         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700"
@@ -63,6 +64,7 @@ export default function Register() {
         type="email"
         name="email"
         placeholder="Email"
+        required
         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700"
       />
       <input
@@ -71,6 +73,7 @@ export default function Register() {
         name="password"
         minLength={3}
         maxLength={20}
+        required
         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-zinc-800 dark:border-zinc-700"
       />
       <button

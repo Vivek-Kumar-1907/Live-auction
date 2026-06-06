@@ -32,6 +32,9 @@ io.on("connection", (socket)=>{
         const minbid = minbids[itemId];
         io.to(itemId).emit("min-bid", minbid);
   });
+    socket.on("leave", (id) => {
+        socket.leave(id);
+    });
     socket.on("disconnect", ()=>{
         console.log("Disconnected");
     });
