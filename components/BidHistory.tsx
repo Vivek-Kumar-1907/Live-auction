@@ -16,6 +16,9 @@ export default function BidHistory({ initialBids, itemId }: {
                 socket.connect();
             }
             socket.emit("join", itemId);
+            socket.on("bid-history", (bids) => {
+                setBids(bids);
+            });
             socket.on("new-bid", (data)=>{
                 setBids((bids)=>[data, ...bids]);
             });

@@ -11,8 +11,14 @@ export default function BidSection({ expired, itemId, startingBid }: {
     const [bidAmount, setBidAmount] = useState("");
     const [error, setError] = useState("");
     const [minbid, setminbid] = useState(startingBid);
+    const [userid, setuserid] = useState("");
 
     useEffect(() => {
+        fetch("/api/get_details", {
+            method: "GET"
+        }).then((data)=>data.json()).then((data)=>{
+            setuserid(data.id);
+        })
         if (!socket.connected) {
             socket.connect();
         }
@@ -45,7 +51,7 @@ const handlePlaceBid = (e: React.FormEvent) => {
     socket.emit("place_bid", {
       itemId,
       amount,
-      user_name: "Anonymous Player", 
+      userId: userid, 
       placed_at: new Date().toISOString(),
     });
 
