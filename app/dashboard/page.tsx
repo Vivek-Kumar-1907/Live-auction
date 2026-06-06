@@ -1,6 +1,6 @@
 import {redirect} from "next/navigation";
 import {getUserDetails} from "@/lib/handleCookies";
-import DashboardButtons from "@/lib/DashboardButtons";
+import DashboardButtons from "@/components/DashboardButtons";
 
 export default async function Dashboard() {
     const userDetails = await getUserDetails();
