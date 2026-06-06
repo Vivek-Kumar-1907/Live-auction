@@ -1,6 +1,7 @@
 import pool from "@/lib/db";
 import Navbar from "@/components/BackToDashNav"
-
+import BidSection from "@/components/BidSection";
+import BidHistory from "@/components/BidHistory";
 
 export default async function ItemPage({ params }: { params: { id: string } }) {
   const {id} = await params;
@@ -40,7 +41,6 @@ export default async function ItemPage({ params }: { params: { id: string } }) {
 
       <main className="flex flex-col lg:flex-row gap-6 px-8 py-10 max-w-6xl mx-auto">
 
-        {/* LEFT — item details */}
         <div className="lg:w-1/2 flex flex-col gap-4">
           <img
             src={item.image_url}
@@ -60,14 +60,11 @@ export default async function ItemPage({ params }: { params: { id: string } }) {
           </div>
         </div>
 
-        {/* RIGHT */}
         <div className="lg:w-1/2 flex flex-col gap-6">
 
-          {/* TOP RIGHT — bid section placeholder */}
-          {/* <BidSection expired={expired} itemId={id} startingBid={item.starting_bid} />
+          <BidSection expired={expired} itemId={id} startingBid={item.starting_bid} />
 
-          {/* BOTTOM RIGHT — bid history */}
-          {/* <BidHistory initialBids={bids} itemId={id} /> */}
+          <BidHistory initialBids={bids} itemId={id} />
 
         </div>
       </main>
