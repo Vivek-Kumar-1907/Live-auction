@@ -32,7 +32,6 @@ io.on("connection", (socket) => {
     const minbid = Math.max(highest?.max ?? 0, item.starting_bid);
     socket.emit("min-bid", minbid);
 
-    // send full bid history to the joining client
     const { rows: bids } = await db.query(
       `SELECT bids.amount, users.user_name, bids.placed_at
        FROM bids
@@ -48,7 +47,6 @@ io.on("connection", (socket) => {
   socket.on("place_bid", async (data) => {
     const { itemId, amount, userId } = data;
 
-    // get current highest bid
     const { rows: [highest] } = await db.query(
       "SELECT COALESCE(MAX(amount), 0) as max FROM bids WHERE item_id = $1",
       [itemId]
@@ -59,19 +57,16 @@ io.on("connection", (socket) => {
       [itemId]
     );
 
-    // validate
     if (amount <= highest.max || amount < item.starting_bid) {
       socket.emit("error", "Bid must be higher than current highest bid");
       return;
     }
 
-    // save to DB
     await db.query(
       "INSERT INTO bids (item_id, user_id, amount) VALUES ($1, $2, $3)",
       [itemId, userId, amount]
     );
 
-    // get username
     const { rows: [user] } = await db.query(
       "SELECT user_name FROM users WHERE id = $1",
       [userId]
@@ -83,10 +78,8 @@ io.on("connection", (socket) => {
       placed_at: new Date().toISOString(),
     };
 
-    // broadcast new bid to everyone in the room
     io.to(String(itemId)).emit("new-bid", newBid);
 
-    // broadcast updated min bid
     io.to(String(itemId)).emit("min-bid", amount);
   });
 
