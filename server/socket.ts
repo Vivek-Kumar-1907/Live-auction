@@ -11,7 +11,7 @@ const db = new Pool({
 const httpServer = createServer();
 
 const io = new Server(httpServer, {
-  cors: { origin: "http://localhost:3000" }
+  cors: { origin: "https://live-auction-eta.vercel.app/" }
 });
 
 io.on("connection", (socket) => {
