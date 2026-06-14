@@ -1,2 +1,6 @@
 # Live-auction
-Live auction app with websockets. "npm run dev" to run the project
+
+Live auction app with websockets.
+
+**Run locally:** `npm run dev`  
+**Deployed website:** https://live-auction-eta.vercel.app
